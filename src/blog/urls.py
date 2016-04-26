@@ -30,6 +30,7 @@ urlpatterns = [
     url(r'^login/', login_view, name='login'),
     url(r'^logout/', logout_view, name='logout'),
     url(r'^', include("posts.urls", namespace='posts')),
+    url(r'^api/posts/', include("posts.api.urls", namespace='posts-api')),
     #url(r'^posts/$', "<appname>.views.<function_name>"),
 ]
 
