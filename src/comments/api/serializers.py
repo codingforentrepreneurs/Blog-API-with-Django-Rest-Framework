@@ -13,13 +13,12 @@ from comments.models import Comment
 
 User = get_user_model()
 
-def create_comment_serializer(model_type='post', slug=None, parent_id=None):
+def create_comment_serializer(model_type='post', slug=None, parent_id=None, user=None):
     class CommentCreateSerializer(ModelSerializer):
         class Meta:
             model = Comment
             fields = [
                 'id',
-                'parent',
                 'content',
                 'timestamp',
             ]
@@ -27,7 +26,7 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None):
             self.model_type = model_type
             self.slug = slug
             self.parent_obj = None
-            if self.parent_id:
+            if parent_id:
                 parent_qs = Comment.objects.filter(id=parent_id)
                 if parent_qs.exists() and parent_qs.count() ==1:
                     self.parent_obj = parent_qs.first()
@@ -46,12 +45,15 @@ def create_comment_serializer(model_type='post', slug=None, parent_id=None):
 
         def create(self, validated_data):
             content = validated_data.get("content")
-            user = User.objects.all().first()
+            if user:
+                main_user = user
+            else:
+                main_user = User.objects.all().first()
             model_type = self.model_type
             slug = self.slug
             parent_obj = self.parent_obj
             comment = Comment.objects.create_by_model_type(
-                    model_type, slug, content, user,
+                    model_type, slug, content, main_user,
                     parent_obj=parent_obj,
                     )
             return comment

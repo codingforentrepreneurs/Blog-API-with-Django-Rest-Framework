@@ -22,7 +22,7 @@ class CommentManager(models.Manager):
         model_qs = ContentType.objects.filter(model=model_type)
         if model_qs.exists():
             SomeModel = model_qs.first().model_class()
-            obj_qs = SomeModel.objects.filter(slug=self.slug)
+            obj_qs = SomeModel.objects.filter(slug=slug)
             if obj_qs.exists() and obj_qs.count() == 1:
                 instance = self.model()
                 instance.content = content
@@ -32,7 +32,7 @@ class CommentManager(models.Manager):
                 if parent_obj:
                     instance.parent = parent_obj
                 instance.save()
-                return instanc
+                return instance
         return None
 
 
