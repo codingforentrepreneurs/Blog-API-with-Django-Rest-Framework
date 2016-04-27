@@ -80,7 +80,7 @@ class PostListAPIView(ListAPIView):
 
     def get_queryset(self, *args, **kwargs):
         #queryset_list = super(PostListAPIView, self).get_queryset(*args, **kwargs)
-        queryset_list = Post.objects.all()
+        queryset_list = Post.objects.all() #filter(user=self.request.user)
         query = self.request.GET.get("q")
         if query:
             queryset_list = queryset_list.filter(
