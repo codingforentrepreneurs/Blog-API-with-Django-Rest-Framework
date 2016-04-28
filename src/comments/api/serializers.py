@@ -119,3 +119,14 @@ class CommentDetailSerializer(ModelSerializer):
 
 
 
+class CommentEditSerializer(ModelSerializer):
+    class Meta:
+        model = Comment
+        fields = [
+            'id',
+            'content',
+            'timestamp',
+        ]
+
+
+
