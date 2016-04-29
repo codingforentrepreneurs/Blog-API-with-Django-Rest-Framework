@@ -157,16 +157,34 @@ REST_FRAMEWORK = {
     #     'rest_framework.parsers.JSONParser',
     # )
     "DEFAULT_AUTHENTICATION_CLASSES": (
-         'rest_framework.authentication.SessionAuthentication',
+         #'rest_framework.authentication.SessionAuthentication',
+         'rest_framework_jwt.authentication.JSONWebTokenAuthentication',
         #'rest_framework.authentication.BasicAuthentication'
 
     ), 
     "DEFAULT_PERMISSION_CLASSES": (
-         'rest_framework.permissions.IsAuthenticatedOrReadOnly',
+        'rest_framework.permissions.IsAuthenticated',
+        #'rest_framework.permissions.IsAuthenticatedOrReadOnly',
     )
 }
 
 
+'''
+curl -X POST -d "username=cfe&password=learncode" http://127.0.0.1:8000/api/auth/token/
+
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNmZSIsInVzZXJfaWQiOjEsImVtYWlsIjoiIiwiZXhwIjoxNDYxOTY1ODI5fQ.OTX7CZFZqxhaUnU9Da13Ebh9FY_bHMeCF1ypr9hXjWw
+
+curl -H "Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNmZSIsInVzZXJfaWQiOjEsImVtYWlsIjoiIiwiZXhwIjoxNDYxOTY1ODI5fQ.OTX7CZFZqxhaUnU9Da13Ebh9FY_bHMeCF1ypr9hXjWw
+" http://127.0.0.1:8000/api/comments/
+
+
+curl -X POST -H "Authorization: JWT eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJ1c2VybmFtZSI6ImNmZSIsInVzZXJfaWQiOjEsImVtYWlsIjoiIiwiZXhwIjoxNDYxOTY2MTc4fQ._i5wEqJ_OO8wNiVVNAWNPGjGaO7OzChY0UzONgw06D0" -H "Content-Type: application/json" -d '{"content":"some reply to another try"}' 'http://127.0.0.1:8000/api/comments/create/?slug=new-title&type=post&parent_id=13'
+
+
+
+curl http://127.0.0.1:8000/api/comments/
+
+'''
 
 
 
