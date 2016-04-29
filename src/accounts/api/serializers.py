@@ -16,6 +16,19 @@ from rest_framework.serializers import (
 User = get_user_model()
 
 
+class UserDetailSerializer(ModelSerializer):
+    class Meta:
+        model = User
+        fields = [
+            'username',
+            'email',
+            'first_name',
+            'last_name',
+        ]
+
+
+
+
 class UserCreateSerializer(ModelSerializer):
     email = EmailField(label='Email Address')
     email2 = EmailField(label='Confirm Email')
